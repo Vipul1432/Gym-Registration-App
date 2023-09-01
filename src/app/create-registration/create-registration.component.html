@@ -10,6 +10,7 @@
             <mat-label>First Name</mat-label>
             <input formControlName="firstName" matInput placeholder="firstName">
             <mat-icon matSuffix>sentiment_very_satisfied</mat-icon>
+            <mat-error *ngIf="registrationForm.get('firstName')?.hasError('required')">First Name is required.</mat-error>
           </mat-form-field>
         </div>
         <div class="col-md-6">
@@ -17,6 +18,7 @@
             <mat-label>LastName</mat-label>
             <input formControlName="lastName" matInput placeholder="lastName">
             <mat-icon matSuffix>sentiment_very_satisfied</mat-icon>
+            <mat-error *ngIf="registrationForm.get('lastName')?.hasError('required')">Last Name is required.</mat-error>
           </mat-form-field>
         </div>
         <div class="col-md-6">
@@ -24,6 +26,7 @@
             <mat-label>Email</mat-label>
             <input formControlName="email" matInput placeholder="email">
             <mat-icon matSuffix>mail_outline</mat-icon>
+            <mat-error *ngIf="registrationForm.get('email')?.hasError('required')">Email is required.</mat-error>
           </mat-form-field>
         </div>
         <div class="col-md-6">
@@ -31,6 +34,7 @@
             <mat-label>Mobile</mat-label>
             <input type="number" formControlName="mobile" matInput placeholder="mobile">
             <mat-icon matSuffix>mobile_screen_share</mat-icon>
+            <mat-error *ngIf="registrationForm.get('mobile')?.hasError('required')">Mobile Number is required.</mat-error>
           </mat-form-field>
         </div>
         <div class="col-md-6">
@@ -38,6 +42,7 @@
             <mat-label>Weight</mat-label>
             <input type="number" formControlName="weight" matInput placeholder="weight">
             <mat-icon matSuffix>line_weight</mat-icon>
+            <mat-error *ngIf="registrationForm.get('weight')?.hasError('required')">Weight is required.</mat-error>
           </mat-form-field>
         </div>
         <div class="col-md-6">
@@ -46,6 +51,7 @@
             <input [readonly]="!this.registrationForm.value?.weight" type="number" formControlName="height" matInput
               placeholder="height">
             <mat-icon matSuffix><i class="fa fa-text-height" aria-hidden="true"></i></mat-icon>
+            <mat-error *ngIf="registrationForm.get('height')?.hasError('required')">Height is required.</mat-error>
           </mat-form-field>
         </div>
         <div class="col-md-6">

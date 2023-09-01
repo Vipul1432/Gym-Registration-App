@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NgToastService } from 'ng-angular-popup';
 import { ApiService } from '../services/api.service';
@@ -37,20 +37,20 @@ export class CreateRegistrationComponent implements OnInit {
   }
   ngOnInit(): void {
     this.registrationForm = this.fb.group({
-      firstName: [''],
-      lastName: [''],
-      email: [''],
-      mobile: [''],
-      weight: [''],
-      height: [''],
+      firstName: ['', [Validators.required, Validators.minLength(2)]],
+      lastName: ['', [Validators.required, Validators.minLength(2)]],
+      email: ['', [Validators.required, Validators.email]],
+      mobile: ['', [Validators.required, Validators.pattern('^[0-9]{10}$')]],
+      weight: ['', [Validators.required, Validators.min(1)]],
+      height: ['', [Validators.required, Validators.min(1)]],
       bmi: [''],
       bmiResult: [''],
-      gender: [''],
-      requireTrainer: [''],
-      package: [''],
-      important: [''],
-      haveGymBefore: [''],
-      enquiryDate: ['']
+      gender: ['', Validators.required],
+      requireTrainer: ['', Validators.required],
+      package: ['', Validators.required],
+      important: ['', Validators.required],
+      haveGymBefore: ['', { validators: Validators.required, updateOn: 'blur' }],
+      enquiryDate: ['', Validators.required]
     });
     this.registrationForm.controls['height'].valueChanges.subscribe(res => {
       this.calculateBmi(res);
@@ -71,13 +71,22 @@ export class CreateRegistrationComponent implements OnInit {
           })
       }
     })
+
+    
+  }
+  get formControls(): { [key: string]: any } {
+    return this.registrationForm.controls;
   }
   submit() {
+    if (this.registrationForm.valid) {
     this.api.postRegistration(this.registrationForm.value)
       .subscribe(res => {
         this.toastService.success({ detail: 'SUCCESS', summary: 'Registration Successful', duration: 3000 });
         this.registrationForm.reset();
       });
+    } else {
+      console.log('Invalid form. Please check the fields.');
+    }
   }
 
   fillFormToUpdate(user: User) {
